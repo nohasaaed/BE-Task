@@ -29,10 +29,10 @@ if($result = mysqli_query($database, $sql)){
         while($row = mysqli_fetch_array($result)){
             ?>
                    <form method="post" action="index.php?action=add&id=<?php echo $row["id"]; ?>">
-						<h4 class="text-info"><?php echo $row["name"]; ?></h4>
-						<h4 class="text-danger">$ <?php echo $row["price"]; ?></h4>
-						<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
-				    </form>
+	                 <h4 class="text-info"><?php echo $row["name"]; ?></h4>
+		         <h4 class="text-danger">$ <?php echo $row["price"]; ?></h4>
+		         <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
+		    </form>
                 <?php
         }
         mysqli_free_result($result);
