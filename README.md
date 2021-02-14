@@ -1,5 +1,5 @@
-#BE ( Task ) 
-##Problem solution:
+
+# Problem Solution:
 - follow most of SOLID princibles such as: Single responsibility and open-closed princible in order to produce an organized, clear and clean code.
 - use the Strategy design pattern to give the user a space to choose the type of bill during the runtime.
 
