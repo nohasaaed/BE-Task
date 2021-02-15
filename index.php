@@ -1,93 +1,81 @@
-<?php
+<?php 
 require_once('ProductClass.php');
 require_once('CartClass.php');
-require_once('BillClass.php');
-
-$user = 'root';
-$password = '';
-$database = 'task';
-$database = new mysqli('localhost',$user,$password,$database) or die ("unable to connent");
-
-//set product into cart
-if(isset($_POST["add_to_cart"]))
-{
-    $id = $_GET["id"];
-    $sql = "INSERT INTO cart (product_id,id) VALUES ($id, NULL)";
-
-    if ($database->query($sql) === TRUE) {
-      echo "New record created successfully";
-    } else {
-      echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-}
+require_once('bill.php');
 
 
-//display products
-$sql = "SELECT * FROM Products";
-if($result = mysqli_query($database, $sql)){
-    if(mysqli_num_rows($result) > 0){
-        while($row = mysqli_fetch_array($result)){
-            ?>
-                   <form method="post" action="index.php?action=add&id=<?php echo $row["id"]; ?>">
-						<h4 class="text-info"><?php echo $row["name"]; ?></h4>
-						<h4 class="text-danger">$ <?php echo $row["price"]; ?></h4>
-						<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
-				    </form>
-                <?php
-        }
-        mysqli_free_result($result);
-    } else{
-        echo "No records matching your query were found.";
-    }
-} else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($database);
-}
+$product = new Products();
+$item = new Cart();
 
-// Close connection
-mysqli_close($database);
+ if(isset($_POST["add_to_cart"]))  
+ {  
+    $item_array = array(  
+        'item_id'          =>     $_GET["id"],  
+        'item_name'        =>     $_POST["hidden_name"],  
+        'item_price'       =>     $_POST["hidden_price"],  
+        'item_quantity'    =>     $_POST["quantity"], 
+        'items_total'      =>     $_POST["quantity"] * $_POST["hidden_price"]  
+   ); 
+    $item->addItem($item_array);
+ }  
+ ?> 
+  
+ <!DOCTYPE html>  
+ <html>  
+      <head>  
+           <title>BE Task</title>  
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+      </head>  
+      <body>  
+           <br />  
+           <div class="container">  
+                <?php  
+                $array = $product->get_products();  
+                foreach($array as $item => $row) {
+                ?>  
+                <div class="col-md-3"> 
+                     <form method="post" action="index.php?action=add&id=<?php echo $row["id"]; ?>"> 
+                        <h4 class="text-info"><?php echo $row["name"]; ?></h4>  
+                        <h4 class="text-danger">$ <?php echo $row["price"]; ?></h4>  
+                        <input type="text" name="quantity" class="form-control" value="1" />  
+                        <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" />  
+                        <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" />  
+                        <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />  
+                     </form>  
+                </div> 
+   
+                <?php  
+                }   
+                ?>  
+                <form  method="post">
+                    <select name="currency">
+                       <option value="EG" selected>EG</option>
+                       <option value="USD">USD</option>
+                    </select>
+                    <input type="submit" name="submit" value="Checkout">
+                </form>
 
+            <?php
+                  if(isset($_POST['submit'])){
+                    if(!empty($_POST['currency'])) {
+                       $selected = $_POST['currency'];
+                    }
 
+                $item = new Cart();
+                $bill = new bill();
 
+                if($selected == "EG"){
+                   $bill->setStrategy(new Bill_EG());
+                }else{
+                $bill->setStrategy(new Bill_USD());
+                }
 
+                echo "<h3>Bill Details</h3>";
+                $bill->display_bill();
+                }
+            ?> 
 
-
-//Add available products
-$t_shirt = new Product();
-$pants   = new Product();
-$jacket  = new Product();
-$shoes   = new Product();
-$t_shirt->set_name('T-shirt');
-$t_shirt->set_price(10.99);
-
-$pants->set_name('Pants');
-$pants->set_price(14.99);
-
-$jacket->set_name('Jacket');
-$jacket->set_price(19.99);
-
-$shoes->set_name('Shoes');
-$shoes->set_price(24.99);
-
-//Create shopping cart
- $cart = new Cart();
- $cart->addItem($t_shirt);
- $cart->addItem($t_shirt);
- $cart->addItem($shoes);
- $cart->addItem($jacket);
-
-//Produce bill
-$bill = new Bill();
-
-//select bill type
-$bill->setStrategy(new Bill_USD());
-$bill->display_bill($cart);
-?>
-
-
-
-
-
-
-
-
-
+      </body>  
+ </html>
