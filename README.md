@@ -6,6 +6,7 @@
 
 ## How program run:
    1- you should determine the amount of each product that you need. then click on add product button.
+   
    2- select the bill currency that you want to proceed then click on checkout button.
 
 ### First Scenario:
