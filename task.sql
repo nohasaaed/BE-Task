@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Feb 15, 2021 at 01:50 PM
+=======
+-- Generation Time: Feb 14, 2021 at 02:17 PM
+>>>>>>> ae938c4c26d9880ad7c51524deb2c9662721c1c1
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -30,17 +34,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
+<<<<<<< HEAD
   `product_id` int(11) NOT NULL,
   `item_name` varchar(20) NOT NULL,
   `unit_price` float NOT NULL,
   `quantity` int(11) NOT NULL,
   `items_total` float NOT NULL
+=======
+  `product_id` int(11) NOT NULL
+>>>>>>> ae938c4c26d9880ad7c51524deb2c9662721c1c1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cart`
 --
 
+<<<<<<< HEAD
 INSERT INTO `cart` (`id`, `product_id`, `item_name`, `unit_price`, `quantity`, `items_total`) VALUES
 (196, 1, 'T-shirt', 10.99, 1, 10.99),
 (197, 2, 'Pants', 14.99, 1, 14.99);
@@ -89,6 +98,10 @@ INSERT INTO `products` (`id`, `name`, `price`) VALUES
 (2, 'Pants', 14.99),
 (3, 'Jacket', 19.99),
 (4, 'Shoes', 24.99);
+=======
+INSERT INTO `cart` (`id`, `product_id`) VALUES
+(1, 1);
+>>>>>>> ae938c4c26d9880ad7c51524deb2c9662721c1c1
 
 --
 -- Indexes for dumped tables
@@ -102,6 +115,7 @@ ALTER TABLE `cart`
   ADD KEY `product_id` (`product_id`);
 
 --
+<<<<<<< HEAD
 -- Indexes for table `offers`
 --
 ALTER TABLE `offers`
@@ -116,6 +130,8 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+=======
+>>>>>>> ae938c4c26d9880ad7c51524deb2c9662721c1c1
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -123,6 +139,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
@@ -136,6 +153,9 @@ ALTER TABLE `offers`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+>>>>>>> ae938c4c26d9880ad7c51524deb2c9662721c1c1
 
 --
 -- Constraints for dumped tables
@@ -146,6 +166,7 @@ ALTER TABLE `products`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+<<<<<<< HEAD
 
 --
 -- Constraints for table `offers`
@@ -153,6 +174,8 @@ ALTER TABLE `cart`
 ALTER TABLE `offers`
   ADD CONSTRAINT `offers_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `offers_ibfk_2` FOREIGN KEY (`dependant_product`) REFERENCES `products` (`id`);
+=======
+>>>>>>> ae938c4c26d9880ad7c51524deb2c9662721c1c1
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
